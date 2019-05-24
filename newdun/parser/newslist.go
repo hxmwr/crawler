@@ -7,7 +7,7 @@ import (
 
 const newsListRe = `<a href="(https://www.newdun.com/news/(\d+).html)" target="_blank">(.+?)</a>`
 
-func ParseNewsList(contents []byte, _ string) engine.ParseResult {
+func ParseNewsList(contents []byte, url string) engine.ParseResult {
 	re := regexp.MustCompile(newsListRe)
 	res := re.FindAllSubmatch(contents, -1)
 	var requests []engine.Request
@@ -16,7 +16,6 @@ func ParseNewsList(contents []byte, _ string) engine.ParseResult {
 			Url:    string(v[1]),
 			Parser: engine.NilParser{},
 		})
-		println(string(v[1]))
 	}
 	return engine.ParseResult{
 		Requests: requests,

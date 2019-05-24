@@ -3,7 +3,7 @@ package worker
 import (
 	"crawler/config"
 	"crawler/engine"
-	"crawler/zhenai/parser"
+	"crawler/newdun/parser"
 	"github.com/pkg/errors"
 	"log"
 )
@@ -66,7 +66,9 @@ func DeserializeResult(r ParseResult) (engine.ParseResult, error) {
 func deserializeParser(p SerializedParser) (engine.Parser, error) {
 	switch p.Name {
 	case config.ParseNewsList:
-		return engine.NewFuncParser(parser.ParseCityList, config.ParseNewsList), nil
+		return engine.NewFuncParser(parser.ParseNewsList, config.ParseNewsList), nil
+	case config.NilParser:
+		return engine.NilParser{}, nil
 	default:
 		return nil, errors.New("unknown parser name")
 	}

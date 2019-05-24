@@ -10,6 +10,5 @@ func Worker(r Request) (ParseResult, error) {
 	if err != nil {
 		log.Printf("Fetcher: error fetching url %s: %v", r.Url, err)
 	}
-
 	return r.Parser.Parse(body, r.Url), nil
 }

@@ -17,7 +17,7 @@ func CreateProcessor() (engine.Processor, error) {
 	return func(request engine.Request) (result engine.ParseResult, e error) {
 		sReq :=  worker.SerializeRequest(request)
 		var sResult worker.ParseResult
-		err := client.Call(config.CralServiceRpc)
+		err := client.Call(config.CrawlServiceRpc, sReq, &sResult)
 		if err != nil {
 			return engine.ParseResult{}, err
 		}

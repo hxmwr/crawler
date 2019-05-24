@@ -1,5 +1,7 @@
 package engine
 
+import "log"
+
 type ConcurrentEngine struct {
 	Scheduler        Scheduler
 	WorkerCount      int
@@ -56,6 +58,7 @@ func (e *ConcurrentEngine) createWorker(in chan Request, out chan ParseResult, r
 			ready.WorkerReady(in)
 			request := <-in
 			result, err := e.RequestProcessor(request)
+			log.Printf("%v", result)
 			if err != nil {
 				continue
 			}

@@ -1,5 +1,8 @@
 package worker
 
+import (
+	"crawler/engine"
+)
 
 type CrawlService struct{}
 

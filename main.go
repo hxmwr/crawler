@@ -3,11 +3,13 @@ package main
 import (
 	"crawler/engine"
 	"crawler/newdun/parser"
+	"crawler/persist"
+	"crawler/scheduler"
 	"crawler/worker/client"
 )
 
 func main() {
-	itemChan, err := persist.ItemSaver("dating_profile")
+	itemChan, err := persist.ItemSaver()
 	if err != nil {
 		panic(err)
 	}
@@ -18,7 +20,7 @@ func main() {
 	}
 
 	e := engine.ConcurrentEngine{
-		Scheduler:        &engine.Scheduler(),
+		Scheduler:        &scheduler.QueuedScheduler{},
 		WorkerCount:      100,
 		ItemChan:         itemChan,
 		RequestProcessor: processor,
