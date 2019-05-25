@@ -1,14 +1,25 @@
 package main
 
 import (
-	"crawler/config"
 	"crawler/rpcsupport"
 	"crawler/worker"
+	"flag"
 	"fmt"
+	"log"
 )
 
+
+var port = flag.Int("port", 0, "specify a port for me to listen on")
+
 func main()  {
-	err := rpcsupport.ServeRpc(fmt.Sprintf(":%d", config.WorkerPort0), worker.CrawlService{})
+	flag.Parse()
+	if *port == 0 {
+		log.Printf("must specify a port")
+		return
+	}
+	err := rpcsupport.ServeRpc(
+		fmt.Sprintf(":%d", *port),
+		worker.CrawlService{})
 	if err != nil {
 		panic(err)
 	}
